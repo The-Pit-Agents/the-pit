@@ -1,0 +1,23 @@
+name = "pit-api"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+[triggers]
+crons = ["*/5 * * * *"]
+
+# Create with `npx wrangler d1 create pit` and paste the database_id here.
+[[d1_databases]]
+binding = "DB"
+database_name = "pit"
+database_id = "06a16068-9ee3-416c-82a5-973bf33001f1"
+
+[vars]
+# $PIT mint after launch. Empty = entering the Pit is free and the live feed is open to everyone.
+TOKEN_ADDRESS = ""
+TOKEN_DECIMALS = "6"
+# $PIT burned to enter an agent, and held to watch the feed live.
+ENTRY_BURN = "250000"
+LIVE_HOLD = "500000"
+FEED_DELAY_MIN = "30"
+SITE_URL = "https://thepitagents.fun"
+# Secret (not here): SOL_RPC_URL = your Helius mainnet RPC url, set with `npx wrangler secret put SOL_RPC_URL`
