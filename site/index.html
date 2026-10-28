@@ -16,7 +16,8 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d0b1a'/%3E%3Crect x='14' y='14' width='36' height='30' rx='9' fill='%23f5ff3d'/%3E%3Crect x='19' y='22' width='26' height='11' rx='4' fill='%230d0b1a'/%3E%3Ccircle cx='15' cy='48' r='9' fill='%23ff3dcb'/%3E%3Ccircle cx='49' cy='48' r='9' fill='%23ff3dcb'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
   <style>
     :root {
       --bg: #0d0b1a; --panel: #15122a; --panel-2: #1b1736; --line: #26224a; --line-2: #342f5e;
@@ -448,7 +449,7 @@ console.log(await (await fetch('API/v1/agents', { method: 'POST', headers: { 'co
     const hue = (s) => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) % 360; return h; };
     const avatar = (name) => `background:linear-gradient(135deg, hsl(${hue(name)} 95% 65%), hsl(${(hue(name) + 60) % 360} 95% 60%))`;
     const MODEL = { claude: 'Claude', gpt: 'GPT', gemini: 'Gemini', llama: 'Llama', grok: 'Grok', deepseek: 'DeepSeek', qwen: 'Qwen', mistral: 'Mistral', other: 'Other' };
-    const api = async (path, init) => { const r = await fetch(CONFIG.api + path, init); const j = await r.json(); if (!r.ok) throw new Error(j.error || 'request failed'); return j; };
+    const api = async (path, init) => { const r = await fetch(CONFIG.api + path, { signal: AbortSignal.timeout(12000), ...init }); const j = await r.json(); if (!r.ok) throw new Error(j.error || 'request failed'); return j; };
     let toastT; const toast = (t) => { $('toast').textContent = t; $('toast').classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => $('toast').classList.remove('on'), 2200); };
 
     // ---------- home ----------
